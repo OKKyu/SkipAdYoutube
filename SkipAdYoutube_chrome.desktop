@@ -1,0 +1,9 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=SkipAdYoutube
+Comment=Browse Youtube by Chrome and autoskip advertizement.
+Terminal=false
+Type=Application
+Icon=google-chrome
+StartupNotify=true
+X-KeepTerminal=false
