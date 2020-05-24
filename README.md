@@ -50,20 +50,20 @@
    ブラウザの起動後は、普段通りに使用して下さい。
 　　終了する場合も、ブラウザを閉じるだけで良いです。
 
-# Noe
+# Note
  前提：
-　・osはlinux(64bit)のみ対応しています。macやwindowsでは動作保証しません。
-　・ChromeとFireFoxに対応しています。他ブラウザは未対応です。
-　・当ツールは人が手動で「広告をスキップ」をクリックする作業を自動化したものです。
-　　手動でクリックできないものまでスキップすることは不可能です。
-　　よって以下の状態でなければ正しく動作しません。
-　　　ブラウザの画面を表示していること。
-　　　ブラウザ以外の画面でブラウザが隠れていないこと。
-　　　マウスでクリックしてスキップできる広告であること。
-　　　　（カウントダウン中の間や、そもそもスキップさせるリンクが表示されない場合は不可能）
-  ・seleniumは本来ブラウザアプリのテスト自動化用のツールです。ブラウザによっては画面上に「自動テストソフトウェアによって
-　　制御されています。」といったメッセージが表示されますが、動作上は問題ありません。
-　・複数同時起動した場合には対応していません。
+- 　・osはlinux(64bit)のみ対応しています。macやwindowsでは動作保証しません。
+- 　・ChromeとFireFoxに対応しています。他ブラウザは未対応です。
+- 　・当ツールは人が手動で「広告をスキップ」をクリックする作業を自動化したものです。
+- 　　手動でクリックできないものまでスキップすることは不可能です。
+- 　　よって以下の状態でなければ正しく動作しません。
+- 　　　ブラウザの画面を表示していること。
+- 　　　ブラウザ以外の画面でブラウザが隠れていないこと。
+- 　　　マウスでクリックしてスキップできる広告であること。
+- 　　　　（カウントダウン中の間や、そもそもスキップさせるリンクが表示されない場合は不可能）
+-  ・seleniumは本来ブラウザアプリのテスト自動化用のツールです。ブラウザによっては画面上に「自動テストソフトウェアによって
+- 　　制御されています。」といったメッセージが表示されますが、動作上は問題ありません。
+- 　・複数同時起動した場合には対応していません。
 
 # Structure
 
@@ -81,15 +81,15 @@
   (c) 2020 OKKyu allrights reserved under MIT license.
 
   ライセンスの対象
-    SkipAdYoutube.py
-    setup.sh
-    run.sh
-    requrements.txt
+-   SkipAdYoutube.py
+-   setup.sh
+-   run.sh
+-   requrements.txt
 
   注意：chrome-driver及びgechodriverはOKKyuの著作物ではありません。
-       それぞれ以下のダウンロード元に著作権があります。
-　　　　　https://sites.google.com/a/chromium.org/chromedriver/downloads
-        https://github.com/mozilla/geckodriver/releases
+-      それぞれ以下のダウンロード元に著作権があります。
+- 　　　　https://sites.google.com/a/chromium.org/chromedriver/downloads
+-       https://github.com/mozilla/geckodriver/releases
 
-## Author
+# Author
 OKKyu
