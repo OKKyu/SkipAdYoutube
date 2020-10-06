@@ -8,14 +8,14 @@
  という時などに使えます。  
 
 # Requirement
- ・python3、python3-venv  
+- python3、python3-venv  
    python2以前のバージョンでは動作確認していません。  
    setup.shもpython3、python3-venvは既にインストール済みという前提で組んでいます。  
    python3、python3-venvがない場合はユーザー様各自でパッケージ管理ソフトからインストールをして下さい。  
- ・python-selenium  
+- python-selenium  
    後述するWebDriverをpythonから制御するためのパッケージです。   
    これはrequirements.txtを用いてpipでインストールさせています。  
-　・Selenium WebDriverを本アプリに同梱しています。  
+- Selenium WebDriverを本アプリに同梱しています。  
      Chrome用のドライバー:chromedriver(81.0.4044.138 linux 64bit)  
      Firfox用のドライバー:geckodriver(v0.26.0-linux 64bit)  
 
@@ -23,9 +23,9 @@
   ルートフォルダ "SkipAdYoutube" ごと好きな場所に格納して下さい。
 
 # Setup
- コンソールでSkipAdYoutubeフォルダ直下をカレントディレクトリとし、以下を実行して下さい。
+ コンソールでSkipAdYoutubeフォルダ直下をカレントディレクトリとし、以下を実行して下さい。  
  
-   bash setup.sh
+   bash setup.sh  
  
  本シェルスクリプトは以下の処理を行います。  
  ・SkipAdYoutube 内部にpythonのvenvで仮想環境を作成します。その仮想環境上にseleniumパッケージをダウンロードします。  
@@ -35,10 +35,10 @@
    ショートカットを再作成したい場合には、もう一度setup.shを実行してみて下さい。  
 
 # Usage
- ・ショートカットを使用する場合  
+- ショートカットを使用する場合  
    デスクトップ上のショートカットをクリックするだけです。  
 
- ・ショートカットを使わず直接起動する場合  
+- ショートカットを使わず直接起動する場合  
    コンソールでSkipAdYoutubeフォルダ直下をカレントディレクトリとし、以下を実行して下さい。  
 
      bash run.sh 引数１  
@@ -46,7 +46,7 @@
    "引数１"　とある箇所には chrome もしくは firefox と入力して下さい。  
    入力したブラウザが開きます。  
    ブラウザの起動後は、普段通りに使用して下さい。  
-　　終了する場合も、ブラウザを閉じるだけで良いです。  
+   終了する場合も、ブラウザを閉じるだけで良いです。  
 
 # Note
  前提：
