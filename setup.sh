@@ -6,6 +6,7 @@ if [ ! -d ./venv ]; then
 fi
 
 source ./venv/bin/activate
+pip install -U pip
 pip install -r requirements.txt
 deactivate
 
