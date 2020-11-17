@@ -35,8 +35,11 @@ def skipAd(seconds=1,browser='chrome'):
         #driver = webdriver.Chrome()
         
     elif browser == 'firefox':
+        #options
+        profile = webdriver.FirefoxProfile(os.environ['HOME'] + '/.mozilla/firefox/w847djlu.default-esr')
+        
         #run browser
-        driver = webdriver.Firefox()
+        driver = webdriver.Firefox(profile)
         
     #open url
     driver.get(start_urls[0])
