@@ -1,6 +1,6 @@
 #! python3
 # -*- coding:utf-8 -*-
-import sys,time,os
+import sys, time, os, csv
 from datetime import datetime,timedelta,timezone
 from selenium import webdriver
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
@@ -9,12 +9,44 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException
 
-def skipAd(seconds=1,browser='chrome'):
+def skipAd(seconds=1, browser='chrome'):
+    if browser != 'chrome' and browser != 'firefox':
+        print('No target borwser was indicated... Please indicate target browser (chrome or firefox)')
+        sys.exit(1)
+    
     print('skAd started')
     
     #common setting
     start_urls = ['https://www.youtube.com/']
     os.environ['PATH'] = os.environ['PATH'] + ":./"
+    
+    #profile
+    user_data_dir = ''
+    profile_path = ''
+    cfgName = ''
+    if browser == 'chrome':
+        cfgName = 'target_profile_chrome.cfg'
+    elif browser == 'firefox':
+        cfgName = 'target_profile_firefox.cfg'
+    #check what config file exists.
+    if os.path.exists(cfgName) == False:
+        print('No Configuration File... Please make ' + cfgName + ' and setting.')
+        sys.exit(2)
+        
+    #read config file.
+    with open(cfgName, 'r') as f:
+        for row in csv.reader(f):
+            if row[0] == 'user_data_dir':
+                user_data_dir = row[1]
+            if row[0] == 'profile_path':
+                profile_path = row[1]    
+    
+    #check profile place
+    useProfile = True
+    if os.path.exists(user_data_dir + profile_path) == False:
+        print('No such as profile path... ' + user_data_dir + profile_path)
+        print('This process will run without profile.')
+        useProfile = False
     
     #each browser's setting. now only chrome.
     if browser == 'chrome':
@@ -23,23 +55,26 @@ def skipAd(seconds=1,browser='chrome'):
         desiredcapabilities['platform'] = os.uname().sysname
         desiredcapabilities['version'] = os.uname().version
         
-        #options
-        options = webdriver.chrome.options.Options()
-        user_data_dir = os.environ['HOME'] + '/.config/google-chrome/'
-        profile_path = './Default'
-        options.add_argument("--user-data-dir=" + user_data_dir)
-        options.add_argument("--profie-directory=" + profile_path)
-        
-        #run browser
-        driver = webdriver.Chrome(desired_capabilities=desiredcapabilities, options=options)
-        #driver = webdriver.Chrome()
+        if useProfile == True:
+            #options
+            options = webdriver.chrome.options.Options()
+            options.add_argument("--user-data-dir=" + user_data_dir)
+            options.add_argument("--profie-directory=" + profile_path)
+            
+            #run browser
+            driver = webdriver.Chrome(desired_capabilities=desiredcapabilities, options=options)
+        else:
+            #run browser
+            driver = webdriver.Chrome(desired_capabilities=desiredcapabilities)
         
     elif browser == 'firefox':
-        #options
-        profile = webdriver.FirefoxProfile(os.environ['HOME'] + '/.mozilla/firefox/w847djlu.default-esr')
-        
-        #run browser
-        driver = webdriver.Firefox(profile)
+        if useProfile == True:
+            #options
+            profile = webdriver.FirefoxProfile(user_data_dir + profile_path)
+            #run browser
+            driver = webdriver.Firefox(profile)
+        else:
+            driver = webdriver.Firefox()
         
     #open url
     driver.get(start_urls[0])
@@ -87,6 +122,8 @@ def skipAd(seconds=1,browser='chrome'):
         
 if __name__ == '__main__':
     if len(sys.argv) >= 2:
+        #running with indicated settings ( 1st:wait seconds, 2nd:browser)
         skipAd(int(sys.argv[1]), sys.argv[2])
     else:
+        #running as default settings (chrome)
         skipAd()
