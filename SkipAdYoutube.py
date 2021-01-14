@@ -1,6 +1,7 @@
 #! python3
 # -*- coding:utf-8 -*-
 import sys, time, os, csv
+import platform
 from datetime import datetime,timedelta,timezone
 from selenium import webdriver
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
@@ -8,17 +9,22 @@ from selenium.webdriver.remote.webelement import WebElement
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException
+from msedge.selenium_tools import Edge, EdgeOptions
 
 def skipAd(seconds=1, browser='chrome'):
-    if browser != 'chrome' and browser != 'firefox':
-        print('No target borwser was indicated... Please indicate target browser (chrome or firefox)')
+    if browser != 'chrome' and browser != 'firefox' and browser != 'edge':
+        print('No target borwser was indicated... Please indicate target browser (chrome or firefox or edge)')
         sys.exit(1)
     
     print('skAd started')
     
     #common setting
     start_urls = ['https://www.youtube.com/']
-    os.environ['PATH'] = os.environ['PATH'] + ":./"
+    
+    if platform.system() == 'windows':
+        os.environ['PATH'] = os.environ['PATH'] + ";" + sys.argv[0]
+    else:
+        os.environ['PATH'] = os.environ['PATH'] + ":./"
     
     #profile
     user_data_dir = ''
@@ -28,6 +34,8 @@ def skipAd(seconds=1, browser='chrome'):
         cfgName = 'target_profile_chrome.cfg'
     elif browser == 'firefox':
         cfgName = 'target_profile_firefox.cfg'
+    elif browser == 'edge':
+        cfgName = 'target_profile_edge.cfg'
     #check what config file exists.
     if os.path.exists(cfgName) == False:
         print('No Configuration File... Please make ' + cfgName + ' and setting.')
@@ -52,8 +60,8 @@ def skipAd(seconds=1, browser='chrome'):
     if browser == 'chrome':
         #capabilities
         desiredcapabilities = DesiredCapabilities.CHROME.copy()
-        desiredcapabilities['platform'] = os.uname().sysname
-        desiredcapabilities['version'] = os.uname().version
+        desiredcapabilities['platform'] = platform.system()
+        desiredcapabilities['version']  = platform.version()
         
         if useProfile == True:
             #options
@@ -75,6 +83,19 @@ def skipAd(seconds=1, browser='chrome'):
             driver = webdriver.Firefox(profile)
         else:
             driver = webdriver.Firefox()
+            
+    elif browser == 'edge':
+        if useProfile == True:
+            #profile
+            options = EdgeOptions()
+            #options.use_chromium = True
+            options.add_argument('--user-data-dir=' + user_data_dir)
+            options.add_argument('--profile-directory=' + profile_path)
+            path = 'msedgedriver.exe'
+            #run browser
+            driver = Edge(executable_path=path, options=options)
+        else:
+            driver = Edge('msedgedriver.exe')
         
     #open url
     driver.get(start_urls[0])
@@ -92,18 +113,18 @@ def skipAd(seconds=1, browser='chrome'):
             
             #if target exists, run click operation.    
             if type(div) is list and len(div) >= 1:
-                print("catch ad:" + datetime.now().strftime("%Y-%m-%d %H:%M:%S.%s"))
+                print("catch ad:" + datetime.now().strftime("%Y-%m-%d %H:%M:%S.%f"))
                 for item in div:
                     if isinstance(item, WebElement) and 'click' in dir(item):
                         if item.is_enabled() == True and item.is_displayed() == True:
                             item.click()
-                            print("click ad:" + datetime.now().strftime("%Y-%m-%d %H:%M:%S.%s"))
+                            print("click ad:" + datetime.now().strftime("%Y-%m-%d %H:%M:%S.%f"))
             elif type(div) is WebElement:
-                print("catch ad:" + datetime.now().strftime("%Y-%m-%d %H:%M:%S.%s"))
+                print("catch ad:" + datetime.now().strftime("%Y-%m-%d %H:%M:%S.%f"))
                 if type(div) is WebElement and 'click' in dir(div):
                     if div.is_enabled() == True and div.is_displayed() == True:
                         div.click()
-                        print("click ad:" + datetime.now().strftime("%Y-%m-%d %H:%M:%S.%s"))
+                        print("click ad:" + datetime.now().strftime("%Y-%m-%d %H:%M:%S.%f"))
                 
         except KeyboardInterrupt as kiInterrupt:
             driver.close()
@@ -112,7 +133,7 @@ def skipAd(seconds=1, browser='chrome'):
         except TimeoutException as toutEx:
             print("timeout ytp-ad:" + datetime.now().strftime("%Y-%m-%d %H:%M:%S.%f"))
         except Exception as ex:
-            print(driver.current_url)
+            print(ex)
             print("none clickbtn?:" + datetime.now().strftime("%Y-%m-%d %H:%M:%S.%f"))
         finally:
             pass
