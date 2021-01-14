@@ -9,6 +9,7 @@ from selenium.webdriver.remote.webelement import WebElement
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException
+from selenium.common.exceptions import NoSuchWindowException
 from msedge.selenium_tools import Edge, EdgeOptions
 
 def skipAd(seconds=1, browser='chrome'):
@@ -132,6 +133,10 @@ def skipAd(seconds=1, browser='chrome'):
             break
         except TimeoutException as toutEx:
             print("timeout ytp-ad:" + datetime.now().strftime("%Y-%m-%d %H:%M:%S.%f"))
+        except NoSuchWindowException as nswEx:
+            print(nswEx)
+            print(datetime.now().strftime("%Y-%m-%d %H:%M:%S.%f"))
+            break
         except Exception as ex:
             print(ex)
             print("none clickbtn?:" + datetime.now().strftime("%Y-%m-%d %H:%M:%S.%f"))
