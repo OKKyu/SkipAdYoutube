@@ -1,0 +1,6 @@
+https://pypi.org/project/selenium/　をもとに以下バージョンを取得した。
+
+geckodriver-v0.28.0-win64
+Edge(chromium) 87.0.664.75 x64
+chromedriver 87.0.4280.20 win32
+

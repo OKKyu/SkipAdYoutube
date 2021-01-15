@@ -22,10 +22,10 @@ def skipAd(seconds=1, browser='chrome'):
     #common setting
     start_urls = ['https://www.youtube.com/']
     
-    if platform.system() == 'windows':
-        os.environ['PATH'] = os.environ['PATH'] + ";" + sys.argv[0]
+    if platform.system() == 'Windows':
+        os.environ['PATH'] = os.environ['PATH'] + ";." + os.sep + "win"
     else:
-        os.environ['PATH'] = os.environ['PATH'] + ":./"
+        os.environ['PATH'] = os.environ['PATH'] + ":./linux"
     
     #profile
     user_data_dir = ''
@@ -92,11 +92,11 @@ def skipAd(seconds=1, browser='chrome'):
             #options.use_chromium = True
             options.add_argument('--user-data-dir=' + user_data_dir)
             options.add_argument('--profile-directory=' + profile_path)
-            path = 'msedgedriver.exe'
+            path = 'win' + os.sep + 'msedgedriver.exe'
             #run browser
             driver = Edge(executable_path=path, options=options)
         else:
-            driver = Edge('msedgedriver.exe')
+            driver = Edge('win' + os.sep + 'msedgedriver.exe')
         
     #open url
     driver.get(start_urls[0])
