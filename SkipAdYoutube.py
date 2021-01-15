@@ -10,6 +10,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException
 from selenium.common.exceptions import NoSuchWindowException
+from selenium.common.exceptions import InvalidSessionIdException
 from msedge.selenium_tools import Edge, EdgeOptions
 
 def skipAd(seconds=1, browser='chrome'):
@@ -135,6 +136,10 @@ def skipAd(seconds=1, browser='chrome'):
             print("timeout ytp-ad:" + datetime.now().strftime("%Y-%m-%d %H:%M:%S.%f"))
         except NoSuchWindowException as nswEx:
             print(nswEx)
+            print(datetime.now().strftime("%Y-%m-%d %H:%M:%S.%f"))
+            break            
+        except InvalidSessionIdException as isidEx:
+            print(isidEx)
             print(datetime.now().strftime("%Y-%m-%d %H:%M:%S.%f"))
             break
         except Exception as ex:
