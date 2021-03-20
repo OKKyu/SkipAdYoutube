@@ -7,3 +7,4 @@
 *.gif
 *.log
 !requirements.txt
+!requirements_win.txt
